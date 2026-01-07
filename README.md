@@ -1,2 +1,1 @@
 ﻿# ML_projects
-playlist link - https://www.youtube.com/playlist?list=PLKnIA16_RmvY5eP91BGPa0vXUYmIdtfPQ
