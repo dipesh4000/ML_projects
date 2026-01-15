@@ -2,4 +2,8 @@
 <project version="4">
   <component name="Black">
   </component>
+<<<<<<< HEAD
+=======
+  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.13" project-jdk-type="Python SDK" />
+>>>>>>> 5e7ff0e (Whatsapp Chat analyzer)
 </project>
