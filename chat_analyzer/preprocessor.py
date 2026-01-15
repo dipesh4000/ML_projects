@@ -17,3 +17,4 @@ def preprocess(data):
     df['minute'] = df['date'].dt.minute
     df.drop(columns=['user_messages','date'], inplace=True)
     return df
+# ww
