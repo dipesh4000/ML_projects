@@ -8,13 +8,13 @@ def preprocess(data):
     df['date'] = (df['date'].str.replace(' - ', '', regex=False).pipe(pd.to_datetime, format='%d/%m/%y, %H:%M'))
     df = df[1:]
     df[['user', 'message']] = df['user_message'].str.split(':', n=1, expand=True)
-    df['user'] = df['user'].apply(lambda x: x.replace('`', "Dipesh"))
-    df['user'] = df['user'].apply(lambda x: x.split()[0])
+    df = df[df['message'].notna()]
+    df['user'] = df['user'].str.replace('`', 'Dipesh')
     df['year'] = df['date'].dt.year
     df['month'] = df['date'].dt.month_name()
     df['day'] = df['date'].dt.day
     df['hour'] = df['date'].dt.hour
     df['minute'] = df['date'].dt.minute
-    df.drop(columns=['user_messages','date'], inplace=True)
+    df.drop(columns=['user_message','date'], inplace=True)
+    df.reset_index(drop=True, inplace=True)
     return df
-# ww
