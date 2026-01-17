@@ -1,3 +1,6 @@
+from urlextract import URLExtract
+
+extractor = URLExtract()
 def fetch_stats(selected_user, df):
 
     if selected_user != 'Overall':
@@ -12,4 +15,14 @@ def fetch_stats(selected_user, df):
 
     num_media_messages = df[df['message'] == ' <Media omitted>\n'].shape[0]
 
-    return num_messages, num_words, num_media_messages
+    links=[]
+    for message in df['message']:
+        links.extend(extractor.find_urls(message))
+
+
+    return num_messages, num_words, num_media_messages, len(links)
+def most_busy_users(df):
+    x = df['user'].value_counts().head()
+    new_df = round((df['user'].value_counts()/df.shape[0])*100, 2).reset_index(
+        ).rename(columns={'user':'name', 'count':'percent'})
+    return x, new_df
