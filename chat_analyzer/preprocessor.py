@@ -16,5 +16,6 @@ def preprocess(data):
     df['hour'] = df['date'].dt.hour
     df['minute'] = df['date'].dt.minute
     df.drop(columns=['user_message','date'], inplace=True)
+    df['message'] = df['message'].apply(lambda x: x.strip())
     df.reset_index(drop=True, inplace=True)
     return df

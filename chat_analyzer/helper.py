@@ -13,7 +13,9 @@ def fetch_stats(selected_user, df):
         words.extend(message.split())
     num_words = len(words)
 
-    num_media_messages = df[df['message'] == ' <Media omitted>\n'].shape[0]
+    df['message'] = df['message'].apply(lambda x: x.strip())
+
+    num_media_messages = df[df['message'] == '<Media omitted>'].shape[0]
 
     links=[]
     for message in df['message']:
@@ -26,3 +28,20 @@ def most_busy_users(df):
     new_df = round((df['user'].value_counts()/df.shape[0])*100, 2).reset_index(
         ).rename(columns={'user':'name', 'count':'percent'})
     return x, new_df
+
+def most_common_words(selected_user, df):
+    f = open('stop_hinglish.txt', 'r')
+    stop_words = f.read()
+
+    if selected_user != 'Overall':
+        df = df[df['user'] == selected_user]
+
+    temp = df.query('message != ""  and message != "<Media omitted>"')
+    temp = temp.reset_index(drop=True)
+
+    words = []
+    for message in df['message']:
+        for word in message.lower().split():
+            if word not in stop_words:
+                words.append(word)
+        words.extend(message.split())
