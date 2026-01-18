@@ -49,5 +49,18 @@ if uploaded_file is not None:
                 st.pyplot(fig)
             with col2:
                 st.dataframe(new_df)
+        #most common words
+        most_common_df = helper.most_common_words(selected_user, df)
+
+        st.header("Most Common Words")
+
+        fig, ax = plt.subplots()
+        col1, col2 = st.columns(2)
+        with col1:
+            st.dataframe(most_common_df)
+        with col2:
+            ax.bar(most_common_df[0], most_common_df[1])
+            plt.xticks(rotation='vertical')
+            st.pyplot(fig)
 
 

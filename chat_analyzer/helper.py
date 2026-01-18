@@ -1,4 +1,6 @@
 from urlextract import URLExtract
+import pandas as pd
+from collections import Counter
 
 extractor = URLExtract()
 def fetch_stats(selected_user, df):
@@ -36,12 +38,13 @@ def most_common_words(selected_user, df):
     if selected_user != 'Overall':
         df = df[df['user'] == selected_user]
 
-    temp = df.query('message != ""  and message != "<Media omitted>"')
+    temp = df.query('message != "<Media omitted>" and message != "<This message was edited>"')
     temp = temp.reset_index(drop=True)
 
     words = []
-    for message in df['message']:
+    for message in temp['message']:
         for word in message.lower().split():
             if word not in stop_words:
                 words.append(word)
-        words.extend(message.split())
+    most_common_df = pd.DataFrame(Counter(words).most_common(20))
+    return most_common_df
